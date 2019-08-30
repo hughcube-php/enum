@@ -7,9 +7,12 @@ use BadMethodCallException;
 trait EnumTrait
 {
     /**
-     * @var array
+     * @return array
      */
-    protected static $labels = [];
+    public static function labels()
+    {
+        return [];
+    }
 
     /**
      * 获取value对应的title
@@ -40,7 +43,9 @@ trait EnumTrait
      */
     public static function getDefault()
     {
-        foreach(static::$labels as $value => $item){
+        $labels = static::labels();
+
+        foreach($labels as $value => $item){
             if (static::isDefault($value)){
                 return static::normalize($value);
             }
@@ -79,17 +84,9 @@ trait EnumTrait
      */
     public static function has($type)
     {
-        return isset(static::$labels[$type]) && is_array(static::$labels[$type]);
-    }
+        $labels = static::labels();
 
-    /**
-     * 获取对照表
-     *
-     * @return array
-     */
-    public static function getLabels()
-    {
-        return static::$labels;
+        return isset($labels[$type]) && is_array($labels[$type]);
     }
 
     /**
@@ -101,7 +98,8 @@ trait EnumTrait
     {
         $types = [];
 
-        foreach(static::$labels as $type => $item){
+        $labels = static::labels();
+        foreach($labels as $type => $item){
             if (!$onlyCanSelect || static::isCanSelect($type)){
                 $types[] = static::normalize($type);
             }
@@ -136,7 +134,8 @@ trait EnumTrait
      */
     protected static function is($name, $type)
     {
-        foreach(static::$labels as $key => $label){
+        $labels = static::labels();
+        foreach($labels as $key => $label){
             if (isset($label['name']) && strtolower($name) === strtolower($label['name'])){
                 return static::isEqual($key, $type);
             }
@@ -180,10 +179,12 @@ trait EnumTrait
      */
     public static function getAttribute($type, $name, $default = null)
     {
-        if (!static::has($type)){
-            return $default;
+        $labels = static::labels();
+
+        if (isset($labels[$type], $labels[$type][$name])){
+            return $labels[$type][$name];
         }
 
-        return array_key_exists($name, static::$labels[$type]) ? static::$labels[$type][$name] : $default;
+        return $default;
     }
 }

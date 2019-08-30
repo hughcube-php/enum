@@ -26,16 +26,22 @@ class NetworkTypeEnum extends Enum
     const M_4G      = '34';
     const M_5G      = '35';
 
-    public static $labels = [
-        self::NONE => ['title' => 'none', 'name' => 'none', 'is_default' => true, 'can_select' => false],
-        self::UNDEFINED => ['title' => 'undefined', 'name' => 'undefined'],
-        self::WIFI => ['title' => 'Wi-Fi', 'name' => 'wifi'],
-        self::M_1G => ['title' => '1G', 'name' => '1g'],
-        self::M_2G => ['title' => '2G', 'name' => '2g'],
-        self::M_3G => ['title' => '3G', 'name' => '3g'],
-        self::M_4G => ['title' => '4G', 'name' => '4g'],
-        self::M_5G => ['title' => '5G', 'name' => '5g'],
-    ];
+    /**
+     * @inheritDoc
+     */
+    public static function labels()
+    {
+        return [
+            static::NONE => ['title' => 'none', 'name' => 'none', 'is_default' => true, 'can_select' => false],
+            static::UNDEFINED => ['title' => 'undefined', 'name' => 'undefined'],
+            static::WIFI => ['title' => 'Wi-Fi', 'name' => 'wifi'],
+            static::M_1G => ['title' => '1G', 'name' => '1g'],
+            static::M_2G => ['title' => '2G', 'name' => '2g'],
+            static::M_3G => ['title' => '3G', 'name' => '3g'],
+            static::M_4G => ['title' => '4G', 'name' => '4g'],
+            static::M_5G => ['title' => '5G', 'name' => '5g'],
+        ];
+    }
 
     /**
      * 是否移动网络

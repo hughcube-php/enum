@@ -14,8 +14,14 @@ class BoolEnum extends Enum
     const TRUE  = '1';
     const FALSE = '0';
 
-    protected static $labels = [
-        self::TRUE => ['title' => '是', 'name' => 'true'],
-        self::FALSE => ['title' => '否', 'name' => 'false', 'is_default' => true],
-    ];
+    /**
+     * @inheritDoc
+     */
+    public static function labels()
+    {
+        return [
+            static::TRUE => ['title' => '是', 'name' => 'true'],
+            static::FALSE => ['title' => '否', 'name' => 'false', 'is_default' => true],
+        ];
+    }
 }

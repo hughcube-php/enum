@@ -18,10 +18,16 @@ class GenderEnum extends Enum
     const FEMALE = '2';
     const OTHER  = '3';
 
-    protected static $labels = [
-        self::NONE => ['title' => 'none', 'name' => 'none', 'is_default' => true, 'can_select' => false],
-        self::MALE => ['title' => '男', 'name' => 'male'],
-        self::FEMALE => ['title' => '女', 'name' => 'female'],
-        self::OTHER => ['title' => '其他', 'name' => 'other'],
-    ];
+    /**
+     * @inheritDoc
+     */
+    public static function labels()
+    {
+        return [
+            static::NONE => ['title' => 'none', 'name' => 'none', 'is_default' => true, 'can_select' => false],
+            static::MALE => ['title' => '男', 'name' => 'male'],
+            static::FEMALE => ['title' => '女', 'name' => 'female'],
+            static::OTHER => ['title' => '其他', 'name' => 'other'],
+        ];
+    }
 }
