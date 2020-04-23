@@ -45,8 +45,8 @@ trait EnumTrait
     {
         $labels = static::labels();
 
-        foreach($labels as $value => $item){
-            if (static::isDefault($value)){
+        foreach ($labels as $value => $item) {
+            if (static::isDefault($value)) {
                 return static::normalize($value);
             }
         }
@@ -84,6 +84,10 @@ trait EnumTrait
      */
     public static function has($type)
     {
+        if (!in_array(gettype($type), ['boolean', 'integer', 'double', 'float', 'string', 'NULL'])) {
+            return false;
+        }
+
         $labels = static::labels();
 
         return isset($labels[$type]) && is_array($labels[$type]);
@@ -99,8 +103,8 @@ trait EnumTrait
         $types = [];
 
         $labels = static::labels();
-        foreach($labels as $type => $item){
-            if (!$onlyCanSelect || static::isCanSelect($type)){
+        foreach ($labels as $type => $item) {
+            if (!$onlyCanSelect || static::isCanSelect($type)) {
                 $types[] = static::normalize($type);
             }
         }
@@ -118,7 +122,7 @@ trait EnumTrait
      */
     public static function __callStatic($name, $arguments)
     {
-        if ('is' === strtolower(substr($name, 0, 2))){
+        if ('is' === strtolower(substr($name, 0, 2))) {
             return static::is(substr($name, 2), $arguments[0]);
         }
 
@@ -135,8 +139,8 @@ trait EnumTrait
     protected static function is($name, $type)
     {
         $labels = static::labels();
-        foreach($labels as $key => $label){
-            if (isset($label['name']) && strtolower($name) === strtolower($label['name'])){
+        foreach ($labels as $key => $label) {
+            if (isset($label['name']) && strtolower($name) === strtolower($label['name'])) {
                 return static::isEqual($key, $type);
             }
         }
@@ -181,7 +185,7 @@ trait EnumTrait
     {
         $labels = static::labels();
 
-        if (isset($labels[$type], $labels[$type][$name])){
+        if (isset($labels[$type], $labels[$type][$name])) {
             return $labels[$type][$name];
         }
 
