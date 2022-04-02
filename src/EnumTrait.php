@@ -60,7 +60,7 @@ trait EnumTrait
      * @param string $type
      * @return bool
      */
-    public static function isCanSelect($type)
+    public static function isCanSelect($type): bool
     {
         return false !== static::getAttribute($type, 'can_select');
     }
@@ -71,7 +71,7 @@ trait EnumTrait
      * @param string $type
      * @return bool
      */
-    public static function isDefault($type)
+    public static function isDefault($type): bool
     {
         return true === static::getAttribute($type, 'is_default');
     }
@@ -82,7 +82,7 @@ trait EnumTrait
      * @param string $type
      * @return bool
      */
-    public static function has($type)
+    public static function has($type): bool
     {
         if (!in_array(gettype($type), ['boolean', 'integer', 'double', 'float', 'string', 'NULL'])) {
             return false;
@@ -98,7 +98,7 @@ trait EnumTrait
      *
      * @return array
      */
-    public static function all($onlyCanSelect = true)
+    public static function all($onlyCanSelect = true): array
     {
         $types = [];
 
@@ -115,12 +115,12 @@ trait EnumTrait
     /**
      * 魔术方法
      *
-     * @param string $name
-     * @param array $arguments
+     * @param  string  $name
+     * @param  array  $arguments
      * @return bool
      * @throws BadMethodCallException
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic(string $name, array $arguments)
     {
         if ('is' === strtolower(substr($name, 0, 2))) {
             return static::is(substr($name, 2), $arguments[0]);
@@ -131,12 +131,8 @@ trait EnumTrait
 
     /**
      * 检测某个名字对应的值
-     *
-     * @param string $name
-     * @param string $type
-     * @return bool
      */
-    protected static function is($name, $type)
+    protected static function is($name, $type): bool
     {
         $labels = static::labels();
         foreach ($labels as $key => $label) {
@@ -150,12 +146,8 @@ trait EnumTrait
 
     /**
      * 比较两个type是否相等
-     *
-     * @param mixed $a
-     * @param mixed $b
-     * @return boolean
      */
-    protected static function isEqual($a, $b)
+    protected static function isEqual($a, $b): bool
     {
         $a = static::normalize($a);
 
@@ -164,8 +156,6 @@ trait EnumTrait
 
     /**
      * 格式化值, 如果type不存在返回null
-     *
-     * @param $type
      * @return null|string
      */
     protected static function normalize($type)
@@ -175,11 +165,6 @@ trait EnumTrait
 
     /**
      * 获取指定值对应的信息
-     *
-     * @param string $type
-     * @param string $name 属性名
-     * @param null $default
-     * @return null|string
      */
     public static function getAttribute($type, $name, $default = null)
     {
